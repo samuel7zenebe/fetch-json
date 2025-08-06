@@ -1,0 +1,39 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+build/
+
+# Wrangler-specific
+.wrangler/
+.env
+.env.local
+.env.development
+.env.production
+
+# TypeScript cache and build artifacts
+*.tsbuildinfo
+*.d.ts
+
+# Logs and temporary files
+*.log
+*.log.*
+tmp/
+
+# Sensitive files
+secrets/
+.env.secrets
+wrangler.toml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

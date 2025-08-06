@@ -17,6 +17,12 @@ export default {
 		const { contentType, result } = await gatherResponse(response);
 
 		const options = { headers: { "content-type": contentType } };
-		return new Response(result, options);
+		return new Response(
+      {
+        ...result,
+        name: "samuel Zenebe",
+      },
+      options
+    );
 	},
 } satisfies ExportedHandler<Env>;
