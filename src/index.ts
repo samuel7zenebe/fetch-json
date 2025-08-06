@@ -1,28 +1,24 @@
 interface Env {}
+
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const url = "https://jsonplaceholder.typicode.com/todos/1";
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    const path = url.pathname;
 
-		// gatherResponse returns both content-type & response body as a string
-		async function gatherResponse(response) {
-			const { headers } = response;
-			const contentType = headers.get("content-type") || "";
-			if (contentType.includes("application/json")) {
-				return { contentType, result: JSON.stringify(await response.json()) };
-			}
-			return { contentType, result: response.text() };
-		}
+    if (request.method === "GET" && path === "/greet") {
+      const name = url.searchParams.get("name") || "Guest";
+      return new Response(`Hello, ${name}!`, {
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
 
-		const response = await fetch(url);
-		const { contentType, result } = await gatherResponse(response);
+    if (request.method === "POST" && path === "/submit") {
+      const data = await request.json<{ message: string }>();
+      return new Response(`Received: ${data.message}`, {
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
 
-		const options = { headers: { "content-type": contentType } };
-		return new Response(
-      {
-        ...result,
-        name: "samuel Zenebe",
-      },
-      options
-    );
-	},
-} satisfies ExportedHandler<Env>;
+    return new Response("Not found", { status: 404 });
+  },
+};
