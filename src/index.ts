@@ -19,6 +19,13 @@ export default {
       });
     }
 
+	if (request.method === "GET" && path === "/json") {
+    const data = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    return new Response(await data.json(), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
     return new Response("Not found", { status: 404 });
   },
 };
